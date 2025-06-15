@@ -1,4 +1,3 @@
-
 import AnalyticsCards from "./AnalyticsCards";
 import PartResultCard from "./PartResultCard";
 import { useState } from "react";
@@ -25,7 +24,7 @@ export default function SellerDashboard() {
   const [tab, setTab] = useState<"listings" | "kyc" | "sales">("listings");
 
   return (
-    <div>
+    <div className="w-full mx-auto max-w-4xl">
       <div className="flex gap-3 mb-5">
         <button
           onClick={() => setTab("listings")}

@@ -23,8 +23,8 @@ const mockOrders = [
 export default function BuyerDashboard() {
   const escrowStatus = mockOrders[0].status;
   return (
-    <div>
-      <h2 className="font-bold text-2xl mb-4">Order History</h2>
+    <div className="w-full max-w-3xl mx-auto">
+      <h2 className="font-bold text-2xl mb-4 text-center">Order History</h2>
       <div className="overflow-x-auto">
         <table className="w-full border rounded-lg text-sm mb-8">
           <thead>
@@ -53,7 +53,9 @@ export default function BuyerDashboard() {
           </tbody>
         </table>
       </div>
-      <EscrowWidget status={escrowStatus} onConfirm={() => alert("Funds released (mock)!")} />
+      <div className="flex justify-center">
+        <EscrowWidget status={escrowStatus} onConfirm={() => alert("Funds released (mock)!")} />
+      </div>
     </div>
   );
 }

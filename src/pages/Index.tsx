@@ -61,13 +61,17 @@ export default function Index() {
       {({ role, openChat }) => {
         if (role === "buyer") {
           return (
-            <div>
-              <div className="py-3">
+            <div className="flex flex-col items-center justify-center min-h-[80vh]">
+              <div className="py-3 w-full max-w-xl text-center">
                 <div className="font-bold text-3xl mb-1 tracking-wide">Find Your Part, Fast.</div>
-                <div className="text-muted-foreground mb-4">Search 20,000+ new and used parts from trusted sellers across South Africa.</div>
-                <SearchBar onSearch={filterParts} />
+                <div className="text-muted-foreground mb-4">
+                  Search 20,000+ new and used parts from trusted sellers across South Africa.
+                </div>
+                <div className="flex justify-center">
+                  <SearchBar onSearch={filterParts} />
+                </div>
               </div>
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-5xl items-stretch">
                 {parts.length
                   ? parts.map((p, idx) => <PartResultCard key={idx} part={p} />)
                   : <div className="col-span-full text-lg text-muted-foreground">No matching parts found.</div>
@@ -77,10 +81,18 @@ export default function Index() {
           );
         }
         if (role === "seller") {
-          return <SellerDashboard />;
+          return (
+            <div className="flex flex-col items-center py-8">
+              <SellerDashboard />
+            </div>
+          );
         }
         if (role === "admin") {
-          return <AdminDashboard />;
+          return (
+            <div className="flex flex-col items-center py-8">
+              <AdminDashboard />
+            </div>
+          );
         }
         return null;
       }}

@@ -1,4 +1,3 @@
-
 const flaggedSellers = [
   { name: "SparePartsNow", kyc: "Fail (ID mismatch)", status: "Suspended" },
   { name: "AutoHero", kyc: "Pending", status: "Active" },
@@ -11,8 +10,8 @@ const disputes = [
 
 export default function AdminDashboard() {
   return (
-    <div>
-      <h2 className="font-bold text-2xl mb-4">Admin Panel</h2>
+    <div className="w-full max-w-4xl mx-auto">
+      <h2 className="font-bold text-2xl mb-4 text-center">Admin Panel</h2>
       <div className="grid md:grid-cols-2 gap-8 mb-6">
         <div className="bg-white rounded p-4 shadow">
           <h3 className="font-semibold mb-2">Seller Approvals / KYC</h3>
@@ -44,7 +43,7 @@ export default function AdminDashboard() {
           </ul>
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-center">
         <button className="rounded bg-accent px-4 py-2 font-bold hover:bg-accent/80 transition">
           Release Escrow (Manual)
         </button>
