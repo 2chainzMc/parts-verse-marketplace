@@ -1,9 +1,10 @@
-
 import { useState } from "react";
 import { User, Bell, Search as SearchIcon, Phone, MessageSquare, ShieldCheck } from "lucide-react";
 import NotificationBell from "./NotificationBell";
 import ChatModal from "./ChatModal";
 import EscrowWidget from "./EscrowWidget";
+import AuthModal from "./AuthModal";
+import { UserProvider, useUser } from "@/context/UserContext";
 
 const navItems = [
   { label: "Buyer", key: "buyer" },
@@ -69,13 +70,24 @@ function VinPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
 }
 
 export default function AppShell({ children }: { children: (tools: { role: string, openChat: () => void }) => React.ReactNode }) {
-  const [role, setRole] = useState<"buyer" | "seller" | "admin">("buyer");
+  // Wrap with UserProvider to provide user and role globally
+  return (
+    <UserProvider>
+      <InnerAppShell>{children}</InnerAppShell>
+    </UserProvider>
+  );
+}
+
+function InnerAppShell({ children }: { children: (tools: { role: string, openChat: () => void }) => React.ReactNode }) {
   const [showChat, setShowChat] = useState(false);
   const [showEscrow, setShowEscrow] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showVin, setShowVin] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
 
-  // Mock escrow status
+  const { user, role, setRole, loading, logout } = useUser();
+
+  // Centered and persistent navigation, login-aware
   const escrowStatus = role === "buyer"
     ? "Awaiting Buyer Confirmation"
     : role === "seller"
@@ -83,87 +95,96 @@ export default function AppShell({ children }: { children: (tools: { role: strin
     : "Monitoring";
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-
-      {/* Sticky Navbar */}
-      <nav className="fixed left-0 top-0 w-full md:w-20 md:h-screen md:flex-col flex z-40 shadow-lg bg-white/95 border-b border-border md:border-r md:border-b-0">
-        <div className="flex md:flex-col items-center gap-2 py-1 md:py-3 px-3 h-full justify-between md:justify-normal md:gap-6">
+    <div className="min-h-screen bg-background flex flex-col items-center">
+      {/* Sticky Navbar - always centered and surfaced */}
+      <nav className="fixed left-0 top-0 w-full flex z-40 shadow-lg bg-white/95 border-b border-border justify-center">
+        <div className="flex items-center gap-2 py-1 px-3 w-full max-w-5xl mx-auto justify-between">
           {/* Logo */}
-          <span className="font-extrabold text-lg md:text-2xl tracking-wide text-primary select-none flex items-center gap-2">
+          <span className="font-extrabold text-lg tracking-wide text-primary select-none flex items-center gap-2">
             <span className="inline-block text-accent">🚗</span>
-            <span className="hidden md:block">All Things Parts</span>
+            All Things Parts
           </span>
           {/* Navigation */}
-          <div className="flex md:flex-col items-center gap-3 md:gap-4">
-            {navItems.map(item => (
+          <div className="flex items-center gap-2">
+            {["buyer", "seller", "admin"].map(k => (
               <button
-                key={item.key}
-                className={`focus:outline-none font-bold rounded-lg w-10 h-10 flex items-center justify-center transition
-                  ${role === item.key ? 'bg-primary text-white shadow-lg scale-110' : 'text-primary hover:bg-accent/30'}
-                `}
-                title={item.label + " Dashboard"}
-                onClick={() => setRole(item.key as any)}
+                key={k}
+                className={`focus:outline-none font-bold rounded-lg px-4 py-2 transition 
+                  ${role === k ? 'bg-primary text-white shadow-lg scale-105' : 'text-primary hover:bg-accent/30'}`
+                }
+                title={(k.charAt(0).toUpperCase() + k.slice(1)) + " Dashboard"}
+                onClick={() => setRole(k as any)}
+                disabled={!user && k !== "buyer"}
               >
-                <User className="w-6 h-6" />
-                <span className="sr-only">{item.label}</span>
+                {k.charAt(0).toUpperCase() + k.slice(1)}
               </button>
             ))}
-            {/* Util buttons */}
-            <button
-              title="Search Parts"
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              <SearchIcon className="w-6 h-6" />
-            </button>
             <button
               title="VIN Decoder"
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition"
+              className="rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition px-3 py-2"
               onClick={() => setShowVin(true)}
             >
-              <ShieldCheck className="w-6 h-6" />
+              VIN
             </button>
             <button
               title="Escrow Status"
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-orange-600 hover:bg-accent/30 transition"
+              className="rounded-lg flex items-center justify-center text-orange-600 hover:bg-accent/30 transition px-3 py-2"
               onClick={() => setShowEscrow(true)}
             >
-              <ShieldCheck className="w-6 h-6" />
+              Escrow
             </button>
             <button
               title="Notifications"
-              className="w-10 h-10 rounded-lg flex items-center justify-center relative text-primary hover:bg-accent/30 transition"
+              className="rounded-lg flex items-center justify-center relative text-primary hover:bg-accent/30 transition px-3 py-2"
               onClick={() => setShowNotifications(true)}
             >
               <NotificationBell />
             </button>
             <button
               title="Chat"
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition"
+              className="rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition px-3 py-2"
               onClick={() => setShowChat(true)}
             >
               <MessageSquare className="w-6 h-6" />
             </button>
-            {/* Telephone for direct call - placeholder, disables on desktop */}
             <a
               title="Telephone Call (Mock)"
-              className="w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition"
+              className="rounded-lg flex items-center justify-center text-primary hover:bg-accent/30 transition px-3 py-2"
               href="tel:0800123123"
             >
               <Phone className="w-6 h-6" />
             </a>
           </div>
+          {/* Login/Logout */}
+          <div>
+            {!user ? (
+              <button className="bg-accent text-primary font-bold rounded-lg px-4 py-2 hover:bg-accent/90" onClick={() => setAuthOpen(true)}>
+                Login / Register
+              </button>
+            ) : (
+              <button className="ml-2 text-xs rounded-lg px-3 py-1 bg-gray-100 hover:bg-primary/10 font-bold" onClick={logout}>
+                Logout
+              </button>
+            )}
+          </div>
         </div>
       </nav>
-
-      {/* Main Content with padding for sticky nav */}
-      <div className="pt-[64px] md:pl-[80px] flex flex-col min-h-screen">
-        <main className="w-full flex flex-col md:flex-row">
-          <section className="flex-1 w-full mx-auto max-w-[1480px] min-h-[85vh] pb-8 pt-6 px-2 sm:px-6">
-            {children({
-              role,
-              openChat: () => setShowChat(true),
-            })}
+      {/* Main Content, centered for all layouts */}
+      <div className="pt-[64px] flex flex-col w-full items-center">
+        <main className="w-full flex flex-col items-center">
+          <section className="flex-1 w-full mx-auto max-w-[1480px] min-h-[85vh] pb-8 pt-6 px-2 sm:px-6 flex flex-col items-center">
+            {/* Loading overlay if checking session */}
+            {loading ? (
+              <div className="flex flex-col items-center justify-center h-48">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+                <div className="mt-2 text-primary font-medium">Loading...</div>
+              </div>
+            ) : (
+              children({
+                role: role || "buyer",
+                openChat: () => setShowChat(true),
+              })
+            )}
           </section>
         </main>
       </div>
@@ -172,6 +193,7 @@ export default function AppShell({ children }: { children: (tools: { role: strin
       <NotificationsPanel open={showNotifications} onClose={() => setShowNotifications(false)} />
       <VinPanel open={showVin} onClose={() => setShowVin(false)} />
       <ChatModal open={showChat} onClose={() => setShowChat(false)} />
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </div>
   );
 }
