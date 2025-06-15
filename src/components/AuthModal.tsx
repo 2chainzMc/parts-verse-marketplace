@@ -3,6 +3,7 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { Dialog } from "@radix-ui/react-dialog";
 import { Input } from "@/components/ui/input";
+import { X } from "lucide-react";
 
 export default function AuthModal({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -33,6 +34,15 @@ export default function AuthModal({ open, onOpenChange }: { open: boolean, onOpe
       <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center" onClick={() => onOpenChange(false)} />
       <div className="fixed inset-0 z-50 flex justify-center items-center pointer-events-none">
         <div className="relative pointer-events-auto bg-white rounded-lg p-6 w-[96vw] max-w-xs flex flex-col shadow-2xl">
+          {/* X close button */}
+          <button
+            className="absolute right-3 top-3 text-gray-500 hover:text-gray-800 transition"
+            onClick={() => onOpenChange(false)}
+            aria-label="Close"
+            type="button"
+          >
+            <X className="w-5 h-5" />
+          </button>
           <h2 className="font-bold text-lg mb-2 text-center">{isLogin ? "Login" : "Register"}</h2>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <Input type="email" placeholder="Email" required value={email} onChange={e => setEmail(e.target.value)} autoFocus />
