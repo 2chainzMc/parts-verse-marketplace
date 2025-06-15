@@ -1,6 +1,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { supabase } from "@/lib/supabaseClient";
+
+// Comment out the supabase import for now
+// import { supabase } from "@/lib/supabaseClient";
 
 interface UserCtx {
   user: any;
@@ -25,27 +27,10 @@ export function useUser() {
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState<"buyer" | "seller" | "admin" | null>("buyer");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Load user from supabase (session persist)
-    const session = supabase.auth.getSession()
-      .then(({ data }) => {
-        setUser(data?.session?.user ?? null);
-        setLoading(false);
-      });
-    // Listen to changes in session
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-    return () => {
-      listener?.subscription.unsubscribe();
-    };
-  }, []);
-
+  // Remove supabase side effects and simply provide the default context
   const logout = async () => {
-    await supabase.auth.signOut();
     setUser(null);
     setRole("buyer");
   };
