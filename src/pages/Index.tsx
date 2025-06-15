@@ -58,9 +58,9 @@ export default function Index() {
 
   return (
     <AppShell>
-      {({ role, openChat }) => (
-        <div>
-          {role === "buyer" && (
+      {({ role, openChat }) => {
+        if (role === "buyer") {
+          return (
             <div>
               <div className="py-3">
                 <div className="font-bold text-3xl mb-1 tracking-wide">Find Your Part, Fast.</div>
@@ -74,15 +74,16 @@ export default function Index() {
                 }
               </div>
             </div>
-          )}
-          {role === "seller" && (
-            <SellerDashboard />
-          )}
-          {role === "admin" && (
-            <AdminDashboard />
-          )}
-        </div>
-      )}
+          );
+        }
+        if (role === "seller") {
+          return <SellerDashboard />;
+        }
+        if (role === "admin") {
+          return <AdminDashboard />;
+        }
+        return null;
+      }}
     </AppShell>
   );
 }

@@ -24,7 +24,7 @@ export default function PartResultCard({ part }: { part: any }) {
       </div>
       <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
         <User className="w-4 h-4" />
-        {part.seller} {part.verified && <Check className="w-3 h-3 text-green-600" title="Verified" />}
+        {part.seller} {part.verified && <Check className="w-3 h-3 text-green-600" />}
       </div>
       <div className="text-xs text-gray-500 italic">{part.vehicle}</div>
     </div>
