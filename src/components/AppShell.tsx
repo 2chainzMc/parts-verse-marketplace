@@ -193,7 +193,6 @@ function InnerAppShell({ children }: { children: (tools: { role: string, openCha
       <NotificationsPanel open={showNotifications} onClose={() => setShowNotifications(false)} />
       <VinPanel open={showVin} onClose={() => setShowVin(false)} />
       <ChatModal open={showChat} onClose={() => setShowChat(false)} />
-      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </div>
   );
 }
