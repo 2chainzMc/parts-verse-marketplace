@@ -14,26 +14,48 @@ const mockMessages = [
 export default function ChatModal({ open, onClose }: Props) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-4 w-full sm:w-[430px] shadow-lg relative animate-scale-in">
-        <button className="absolute top-3 right-3" onClick={onClose}><X /></button>
-        <h2 className="font-bold text-lg mb-2 flex items-center gap-2">
-          <User /> Chat with Seller
-        </h2>
-        <div className="h-48 overflow-y-auto border rounded mb-2 bg-muted flex flex-col gap-2 p-2">
+    <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-background rounded-xl p-6 w-full max-w-lg shadow-2xl relative animate-scale-in border">
+        <button 
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors rounded-full p-1 hover:bg-muted" 
+          onClick={onClose}
+          aria-label="Close chat"
+        >
+          <X className="w-4 h-4" />
+        </button>
+        <div className="flex items-center gap-2 mb-6">
+          <User className="w-5 h-5 text-primary" />
+          <h2 className="font-semibold text-lg">Chat with Seller</h2>
+          <div className="ml-auto flex items-center gap-1">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span className="text-xs text-muted-foreground">Online</span>
+          </div>
+        </div>
+        <div className="h-64 overflow-y-auto border border-border rounded-lg mb-4 bg-muted/20 p-4 space-y-3">
           {mockMessages.map((m, i) => (
             <div key={i} className={`flex ${m.from === "You" ? "justify-end" : "justify-start"}`}>
-              <span className={`rounded px-3 py-1 ${m.from === "You" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"} shadow`}>
-                {m.msg}
-              </span>
+              <div className={`max-w-[70%] rounded-lg px-4 py-2 ${
+                m.from === "You" 
+                  ? "bg-primary text-primary-foreground ml-auto" 
+                  : "bg-background border text-foreground"
+              }`}>
+                <p className="text-sm">{m.msg}</p>
+                <span className="text-xs opacity-70 mt-1 block">
+                  {m.from === "You" ? "You" : "Seller"} • just now
+                </span>
+              </div>
             </div>
           ))}
         </div>
-        <input
-          className="w-full border rounded px-2 py-1"
-          placeholder="Type your message..."
-        />
-        <button className="mt-2 w-full rounded bg-primary text-white py-2 hover:bg-primary/90 transition">Send</button>
+        <div className="flex gap-2">
+          <input
+            className="flex-1 border border-border rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            placeholder="Type your message..."
+          />
+          <button className="px-6 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

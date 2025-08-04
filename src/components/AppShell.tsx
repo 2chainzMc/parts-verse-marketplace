@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Bell, Search as SearchIcon, Phone, MessageSquare, ShieldCheck } from "lucide-react";
+import { User, Bell, Search as SearchIcon, Phone, MessageSquare, ShieldCheck, X } from "lucide-react";
 import NotificationBell from "./NotificationBell";
 import ChatModal from "./ChatModal";
 import EscrowWidget from "./EscrowWidget";
@@ -15,10 +15,14 @@ const navItems = [
 function EscrowPanel({ open, onClose, status, onConfirm }: { open: boolean; onClose: () => void; status: string; onConfirm: () => void }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-6 w-[95vw] max-w-md shadow-lg relative animate-scale-in">
-        <button className="absolute top-3 right-3" aria-label="Close escrow panel" onClick={onClose}>
-          <ShieldCheck className="text-primary" />
+    <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-background rounded-xl p-6 w-full max-w-md shadow-2xl relative animate-scale-in border">
+        <button 
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors rounded-full p-1 hover:bg-muted" 
+          onClick={onClose} 
+          aria-label="Close escrow panel"
+        >
+          <X className="w-4 h-4" />
         </button>
         <EscrowWidget status={status} onConfirm={onConfirm} />
       </div>
@@ -28,22 +32,41 @@ function EscrowPanel({ open, onClose, status, onConfirm }: { open: boolean; onCl
 
 function NotificationsPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null;
-  // Placeholder logic
   return (
-    <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-4 w-full sm:w-[350px] shadow-lg relative animate-scale-in">
-        <button className="absolute top-3 right-3" onClick={onClose} aria-label="Close notifications"><Bell /></button>
-        <div className="font-bold text-lg mb-4">Notifications</div>
-        <div className="space-y-3">
-          <div className="bg-muted rounded p-3 text-sm flex flex-col gap-1">
-            <span className="font-semibold text-primary">Escrow Update</span>
-            Funds have been received for your latest order.
+    <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-background rounded-xl p-6 w-full max-w-md shadow-2xl relative animate-scale-in border">
+        <button 
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors rounded-full p-1 hover:bg-muted" 
+          onClick={onClose} 
+          aria-label="Close notifications"
+        >
+          <X className="w-4 h-4" />
+        </button>
+        <div className="flex items-center gap-2 mb-6">
+          <Bell className="w-5 h-5 text-primary" />
+          <h2 className="font-semibold text-lg">Notifications</h2>
+        </div>
+        <div className="space-y-3 max-h-96 overflow-y-auto">
+          <div className="bg-muted/50 rounded-lg p-4 border-l-4 border-l-primary">
+            <div className="font-medium text-primary mb-1">Escrow Update</div>
+            <p className="text-sm text-muted-foreground">Funds have been received for your latest order.</p>
+            <span className="text-xs text-muted-foreground mt-2 block">2 minutes ago</span>
           </div>
-          <div className="bg-muted rounded p-3 text-sm flex flex-col gap-1">
-            <span className="font-semibold text-primary">Message from Seller</span>
-            "Hi, is the delivery address correct?"
+          <div className="bg-muted/50 rounded-lg p-4 border-l-4 border-l-blue-500">
+            <div className="font-medium text-blue-600 mb-1">Message from Seller</div>
+            <p className="text-sm text-muted-foreground">"Hi, is the delivery address correct?"</p>
+            <span className="text-xs text-muted-foreground mt-2 block">5 minutes ago</span>
           </div>
-          {/* Add more mock notifications as desired */}
+          <div className="bg-muted/50 rounded-lg p-4 border-l-4 border-l-green-500">
+            <div className="font-medium text-green-600 mb-1">Order Shipped</div>
+            <p className="text-sm text-muted-foreground">Your order #12345 has been shipped and is on its way.</p>
+            <span className="text-xs text-muted-foreground mt-2 block">1 hour ago</span>
+          </div>
+        </div>
+        <div className="mt-4 pt-4 border-t">
+          <button className="w-full text-sm text-primary hover:text-primary/80 transition-colors">
+            Mark all as read
+          </button>
         </div>
       </div>
     </div>
@@ -52,17 +75,40 @@ function NotificationsPanel({ open, onClose }: { open: boolean; onClose: () => v
 
 function VinPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null;
-  // Mock VIN lookup
   return (
-    <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
-      <div className="bg-white rounded-lg p-4 w-full sm:w-[360px] shadow-lg relative animate-scale-in">
-        <button className="absolute top-3 right-3" onClick={onClose} aria-label="Close vin lookup"><SearchIcon /></button>
-        <div className="font-bold text-lg mb-4">VIN Decoder <span className="text-xs text-muted-foreground">(Mock)</span></div>
-        <input className="border rounded px-3 py-2 w-full mb-3" placeholder="Enter VIN number" />
-        <button className="w-full rounded py-2 bg-primary text-white font-semibold hover:bg-primary/90 transition">Lookup</button>
-        <div className="mt-4 text-xs text-primary-foreground bg-primary/20 rounded p-2">
-          Try typing: <span className="font-mono">WVWZZZ6RZCY123456</span> <br />
-          <span className="italic">AI will decode vehicle here in future version.</span>
+    <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-background rounded-xl p-6 w-full max-w-md shadow-2xl relative animate-scale-in border">
+        <button 
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors rounded-full p-1 hover:bg-muted" 
+          onClick={onClose} 
+          aria-label="Close VIN lookup"
+        >
+          <X className="w-4 h-4" />
+        </button>
+        <div className="flex items-center gap-2 mb-6">
+          <SearchIcon className="w-5 h-5 text-primary" />
+          <h2 className="font-semibold text-lg">VIN Decoder</h2>
+          <span className="text-xs bg-muted px-2 py-1 rounded-full text-muted-foreground">Beta</span>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Vehicle Identification Number</label>
+            <input 
+              className="border border-border rounded-lg px-4 py-3 w-full focus:ring-2 focus:ring-primary focus:border-transparent transition-all" 
+              placeholder="Enter 17-digit VIN number" 
+              maxLength={17}
+            />
+          </div>
+          <button className="w-full rounded-lg py-3 bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">
+            Decode VIN
+          </button>
+          <div className="bg-muted/50 rounded-lg p-4 border">
+            <div className="text-sm font-medium mb-2">Try this sample VIN:</div>
+            <code className="text-xs bg-background px-2 py-1 rounded border font-mono">WVWZZZ6RZCY123456</code>
+            <p className="text-xs text-muted-foreground mt-2 italic">
+              Full AI-powered vehicle decoding coming soon
+            </p>
+          </div>
         </div>
       </div>
     </div>
