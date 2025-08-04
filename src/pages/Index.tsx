@@ -61,20 +61,20 @@ export default function Index() {
       {({ role, openChat }) => {
         if (role === "buyer") {
           return (
-            <div className="flex flex-col items-center justify-center min-h-[80vh]">
-              <div className="py-3 w-full max-w-xl text-center">
-                <div className="font-bold text-3xl mb-1 tracking-wide">Find Your Part, Fast.</div>
-                <div className="text-muted-foreground mb-4">
+            <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 sm:px-6 lg:px-8">
+              <div className="py-3 w-full max-w-4xl text-center">
+                <div className="font-bold text-2xl sm:text-3xl lg:text-4xl mb-2 tracking-wide">Find Your Part, Fast.</div>
+                <div className="text-muted-foreground mb-6 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto">
                   Search 20,000+ new and used parts from trusted sellers across South Africa.
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center w-full">
                   <SearchBar onSearch={filterParts} />
                 </div>
               </div>
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-5xl items-stretch">
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-full max-w-7xl items-stretch px-2 sm:px-0">
                 {parts.length
                   ? parts.map((p, idx) => <PartResultCard key={idx} part={p} />)
-                  : <div className="col-span-full text-lg text-muted-foreground">No matching parts found.</div>
+                  : <div className="col-span-full text-lg text-muted-foreground text-center py-8">No matching parts found.</div>
                 }
               </div>
             </div>
@@ -82,14 +82,14 @@ export default function Index() {
         }
         if (role === "seller") {
           return (
-            <div className="flex flex-col items-center py-8">
+            <div className="flex flex-col items-center py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
               <SellerDashboard />
             </div>
           );
         }
         if (role === "admin") {
           return (
-            <div className="flex flex-col items-center py-8">
+            <div className="flex flex-col items-center py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
               <AdminDashboard />
             </div>
           );
