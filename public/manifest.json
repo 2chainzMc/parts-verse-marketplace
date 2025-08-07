@@ -1,7 +1,7 @@
 {
   "name": "Verse Parts Marketplace",
   "short_name": "VerseParts",
-  "start_url": "/parts-verse-marketplace/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
