@@ -1,6 +1,6 @@
 {
   "name": "Parts Verse Marketplace",
-  "short_name": "PartsVerse",
+  "short_name": "PVM",
   "start_url": "/parts-verse-marketplace/",
   "display": "standalone",
   "background_color": "#ffffff",
