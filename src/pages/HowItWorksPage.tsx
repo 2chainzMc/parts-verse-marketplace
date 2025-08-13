@@ -87,7 +87,7 @@ export default function HowItWorksPage() {
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">How All Things Parts Works</h1>
+            <h1 className="text-4xl font-bold mb-4">How Ruthless Auto Parts Works</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Your complete guide to buying and selling car parts safely and securely through our platform
             </p>

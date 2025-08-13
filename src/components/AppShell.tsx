@@ -147,8 +147,8 @@ function InnerAppShell({ children }: { children: (tools: { role: string, openCha
         <div className="flex items-center gap-2 py-1 px-3 w-full max-w-5xl mx-auto justify-between">
           {/* Logo */}
           <span className="font-extrabold text-lg tracking-wide text-primary select-none flex items-center gap-2">
-            <span className="inline-block text-accent">🚗</span>
-            All Things Parts
+            <span className="inline-block text-accent">🥷</span>
+            Ruthless Auto Parts
           </span>
           {/* Navigation */}
           <div className="flex items-center gap-2">
