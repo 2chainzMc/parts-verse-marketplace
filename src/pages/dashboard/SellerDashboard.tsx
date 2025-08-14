@@ -31,7 +31,7 @@ export default function SellerDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
       <div className="bg-ninja-charcoal text-ninja-white p-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">

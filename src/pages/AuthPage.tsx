@@ -139,7 +139,7 @@ export default function AuthPage() {
 
   if (step === "details") {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-4">
         <Card className="w-full max-w-md p-6 rounded-ninja shadow-lg">
           <h2 className="text-2xl font-bold mb-6 text-center">Basic Details</h2>
           
@@ -222,7 +222,7 @@ export default function AuthPage() {
 
   if (step === "seller-extras") {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-4">
         <Card className="w-full max-w-2xl p-6 rounded-ninja shadow-lg">
           <div className="mb-6">
             <Progress value={75} className="mb-2" />
