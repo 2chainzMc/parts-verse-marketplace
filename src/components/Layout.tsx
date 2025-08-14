@@ -28,7 +28,7 @@ export default function Layout() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="font-bold text-xl text-primary">
-              🚗 All Things Parts
+              🥷 Ruthless Auto Parts
             </Link>
 
             {/* Desktop Navigation */}

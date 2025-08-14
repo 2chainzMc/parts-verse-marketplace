@@ -82,12 +82,12 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-4 py-6">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">How All Things Parts Works</h1>
+            <h1 className="text-4xl font-bold mb-4">How Ruthless Auto Parts Works</h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Your complete guide to buying and selling car parts safely and securely through our platform
             </p>

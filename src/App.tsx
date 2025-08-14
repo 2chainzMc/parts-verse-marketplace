@@ -13,6 +13,10 @@ import EscrowPage from "./pages/EscrowPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
+import AuthPage from "./pages/AuthPage";
+import LoginPage from "./pages/LoginPage";
+import BuyerDashboard from "./pages/dashboard/BuyerDashboard";
+import SellerDashboard from "./pages/dashboard/SellerDashboard";
 import { UserProvider } from "@/context/UserContext";
 
 const queryClient = new QueryClient();
@@ -36,6 +40,12 @@ const App = () => (
               <Route path="contact" element={<ContactPage />} />
               <Route path="*" element={<NotFound />} />
             </Route>
+            {/* Standalone auth pages */}
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            {/* Dashboard routes */}
+            <Route path="/dashboard/buyer" element={<BuyerDashboard />} />
+            <Route path="/dashboard/seller" element={<SellerDashboard />} />
           </Routes>
         </HashRouter>
       </UserProvider>
