@@ -141,7 +141,7 @@ function InnerAppShell({ children }: { children: (tools: { role: string, openCha
     : "Monitoring";
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center">
       {/* Sticky Navbar - always centered and surfaced */}
       <nav className="fixed left-0 top-0 w-full flex z-40 shadow-lg bg-white/95 border-b border-border justify-center">
         <div className="flex items-center gap-2 py-1 px-3 w-full max-w-5xl mx-auto justify-between">
